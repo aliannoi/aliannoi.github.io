@@ -1,0 +1,150 @@
+@font-face {
+    font-family: "consola";
+    src: url("consola.ttf");
+}
+
+:root {
+    --h-footer: 80px;
+}
+
+.theme-default {
+    --color: #cfbfaf;
+    --color-bg: #001d1a;
+    --color-alt: #FFFFFF;
+    --color-alt2: #07f0e8;
+}
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    color: var(--color);
+    background-color: var(--color-bg);
+    font-family: "consola";
+}
+
+body::-webkit-scrollbar {
+    width: 0;
+}
+
+a, a:visited, a:active {
+    text-decoration: none;
+}
+
+a {
+    color: var(--color);
+    text-decoration: underline;
+}
+
+a:hover {
+    color: var(--color-alt);
+}
+
+h1 {
+    margin: 1rem 0;
+}
+
+section {
+    margin: 1rem 0;
+}
+
+li {
+    list-style: none;
+    margin: 1rem 0;
+}
+
+details {
+    margin: 1rem 0;
+}
+
+details[open] summary:before {
+    content: "[-] "
+}
+
+details p {
+    margin: 0.5rem 0;
+}
+
+summary {
+    list-style: none;
+    cursor: pointer;
+    margin: 0.5rem 0;
+}
+
+summary:before {
+    content: "[+] "
+}
+
+summary:hover {
+    color: var(--color-alt);
+}
+
+.router {
+
+}
+
+.page {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: auto;
+    max-width: 48rem;
+    min-height: 100vh;
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 2rem;
+}
+
+header a.selected:before {
+    content: "#";
+    position: absolute;
+    margin-left: -1rem;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 2;
+    padding: 2rem;
+}
+
+footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 2rem;
+}
+
+footer a {
+    margin: 0 1rem;
+}
+
+footer svg {
+    color: var(--color);
+    width: 2rem;
+    height: 2rem;
+    text-decoration: none;
+}
+
+footer svg:hover {
+    color: var(--color-alt);
+}
+
+.content-projects {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
