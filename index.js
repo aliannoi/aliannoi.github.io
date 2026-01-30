@@ -1,7 +1,7 @@
 // Lib
 
 const COMMON_TAGS = [
-    "canvas", "h1", "h2", "h3", "h4", "h5", "h6", "p", "a",
+    "canvas", "h1", "h2", "h3", "h4", "h5", "h6", "p", "a", "hr",
     "div", "span","select", "img",
     "ul", "li", "section", "article", "details", "summary",
     "header", "main", "footer",
@@ -159,13 +159,7 @@ const pageMain = (...children) => {
 
 const pageFooter = () => {
     const socials = [
-        a({ href: rootLink }, rootSvg).click((e) => {
-            e.preventDefault();
-            const router = getRouter();
-            if (router) {
-                router.navigate(rootLink);
-            }
-        }),
+        routerLink({ href: rootLink     }, rootSvg),
         externLink({ href: githubLink   }, githubSvg),
         externLink({ href: linkedinLink }, linkedinSvg),
         externLink({ href: gmailLink    }, gmailSvg),
@@ -179,6 +173,10 @@ const page = (...children) => {
                pageHeader(),
                pageMain(...children),
                pageFooter());
+};
+
+const pageRoot = () => {
+    return page(div({ class: "content-root" }, h1({}, "Work hard to become N+2 programmer")));
 };
 
 const pageHome = () => {
@@ -198,75 +196,100 @@ const pageProjects = () => {
         {
             name: "WIP Game",
             link: "",
-            description: "The game I am currently working on.",
-            review: "",
+            paragraphs: [
+                "Adventure inspired by Gen-5-6 consoles era.",
+                "The game I am currently working on. It is also a great learn project as I am trying to do everything from scratch to understand how every part of the game/engine works under the hood.",
+            ],                
         },
         {
             name: "Grind Survivors",
             link: "https://www.grindsurvivors.com",
-            description: "Fast-Paced Action Roguelike where demon hunters face endless hellspawn.",
-            review: "I touched the project for a bit of time as I had some free time while waiting for another project to come up after previous one. Main focus was on working with Unreal Engine's ECS version, implementing entity behaviours. Also I have been doing some player related mechanics like dash.",
+            paragraphs: [
+                "Fast-Paced Action Roguelike where demon hunters face endless hellspawn.",
+                "I touched the project for a bit of time as I had some free time while waiting for another project to come up after previous one. Main focus was on working with Unreal Engine's ECS version, implementing entity behaviours. Also I have been doing some player related mechanics like dash.",
+            ],                
         },
         {
             name: "Unknown 9: Awakening",
             link: "https://en.bandainamcoent.eu/unknown-9/unknown-9-awakening",
-            description: "Action-Adventure with fantasy elements.",
-            review: "The first project I worked with and it was quite huge. I was mainly doing different runtime and memory optimizations on both game and engine level, doing UI and fixing bugs. I also implemented initial benchmark system that launched game in special mode, loaded predefined level and flew camera through the level, collecting runtime and memory data. At the end, it displayed statistics in a nice window. I remember it was painful to collect current VRAM usage as Unreal Engine did not provide such functionality, so I had to deep dive into render backend for engine editor and game build to provide such API. At some moment, I had to fix some key binding bug which led me to a journey on fixing almost whole key binding system and it's related UI.",
+            paragraphs: [
+                "Action-Adventure with fantasy elements.",
+                "The first project I worked with and it was quite huge. I was mainly doing different runtime and memory optimizations on both game and engine level, doing UI and fixing bugs.",
+                "I also implemented initial benchmark system that launched game in special mode, loaded predefined level and flew camera through the level, collecting runtime and memory data. At the end, it displayed statistics in a nice window. I remember it was painful to collect current VRAM usage as Unreal Engine did not provide such functionality, so I had to deep dive into render backend for engine editor and game build to provide such API.",
+                "At some moment, I had to fix some key binding bug which led me to a journey on fixing almost whole key binding system and it's related UI.",
+            ],                
         },
         {
             name: "Cartel: Tycoon",
             link: "https://www.carteltycoon.com",
-            description: "Survival business sim inspired by the '80s and '90s narco trade.",
-            review: "As it is a tycoon, it had a tone of UI, so most of the tasks were connected with it. I was fixing and optimizing UI and the game had a lot of such issues both gameplay related UI bugs and runtime performance spikes due to naive UI logic. In addition, I worked with console input to implement gamepad specific input for virtual keyboard.",
+            paragraphs: [
+                "Survival business sim inspired by the '80s and '90s narco trade.",
+                "As it is a tycoon, it had a tone of UI, so most of the tasks were connected with it. I was fixing and optimizing UI and the game had a lot of such issues both gameplay related UI bugs and runtime performance spikes due to naive UI logic. In addition, I worked with console input to implement gamepad specific input for virtual keyboard.",
+            ],                
         },
         {
             name: "Postal 4: No Regerts",
             link: "https://runningwithscissors.com/games/postal4",
-            description: "Satirical and outrageous comedic open world first person shooter.",
-            review: "My main task was to optimize level load times. The game world was divided into level chunks that took quite some time on Gen-8 consoles. It was a great experience as eventually I came up with a solution that much simpler and had almost no abstractions in contrary to what was before. It did not take much time though, most of the time was spent on testing. Final load times were almost halfed on Gen-8 consoles and got 5-20% boost on Gen-9 consoles and PC.",
+            paragraphs: [
+                "Satirical and outrageous comedic open world first person shooter.",
+                "My main task was to optimize level load times. The game world was divided into level chunks that took quite some time on Gen-8 consoles. It was a great experience as eventually I came up with a solution that much simpler and had almost no abstractions in contrary to what was before. It did not take much time though, most of the time was spent on testing. Final load times were almost halfed on Gen-8 consoles and got 5-20% boost on Gen-9 consoles and PC.",
+            ],                
         },
         {
             name: "Deadside",
             link: "https://www.deadsidegame.com",
-            description: "Open World Survival Shooter blending hardcore PVP and PVE action.",
-            review: "Codebase was qutie controversial at the moment I saw it, but recalling it now it had actually good key points such as it's simplicity and openness. Initial task was to setup networking on Gen-9 consoles. After that I have implemented initial core UI components to be built upon and used on console branch of the game.",
+            paragraphs: [
+                "Open World Survival Shooter blending hardcore PVP and PVE action.",
+                "Codebase was qutie controversial at the moment I saw it, but recalling it now it had actually good key points such as it's simplicity and openness. Initial task was to setup networking on Gen-9 consoles. After that I have implemented initial core UI components to be built upon and used on console branch of the game.",
+            ],
         },
         {
             name: "Ted",
             link: "https://github.com/aliannoi/ted",
-            description: "Text Editor",
-            review: "Simple hardware accelerated text editor based on gap buffer data structure.",
+            paragraphs: [
+                "Text Editor",
+                "Simple hardware accelerated text editor based on gap buffer data structure.",
+            ],
         },
         {
             name: "Fifteen",
             link: "https://github.com/aliannoi/FifteenPuzzleGame",
-            description: "Classic 15 Puzzle Game.",
-            review: "",
+            paragraphs: [
+                "Classic 15 Puzzle Game.",
+                "This was one of my first projects in Unreal Engine, I was mainly focused on working with UI here.",
+            ],
         },
         {
             name: "Snake",
             link: "https://github.com/aliannoi/ConsoleSnake",
-            description: "Classic Snake Game in console.",
-            review: "I put quite some effort to implement the game as I saw this project as a compilation of all my knowledge at that time.",
+            paragraphs: [
+                "Classic Snake Game in console.",
+                "I put quite some effort to implement the Snake Game as I saw this project as a compilation of all my knowledge at that time.",
+            ],
         },
         {
             name: "Shooter",
             link: "https://github.com/aliannoi/BasicShooter",
-            description: "Basic Shooter Game.",
-            review: "The basic shooter game I have implemented while completing Unreal Engine study course. It covered almost all the main parts of the engine that gameplay programmers work with - editor, profiling, actor system, sound classes, blueprints, levels, animation graphs etc.",
+            paragraphs: [
+                "Basic Shooter Game.",
+                "The basic shooter game I have implemented while completing Unreal Engine study course. It covered almost all the main parts of the engine that gameplay programmers work with - editor, profiling, actor system, sound classes, blueprints, levels, animation graphs etc.",
+            ],
         },
     ];
     
     return page(div({ class: "content-projects" },
-                    h1({}, "Here are the projects I have worked on."),
                     section({}, ul({}, ...projects.map((item) => {
                         const link = externLink({ href: item.link }, "Link");
                         link.hidden = true;
 
+                        const image = img({ src: "res/favicon.ico" });
                         const d = details({}, summary({}, item.name),
-                                          p({}, item.description),
-                                          p({}, item.review),
-                                          link);
+                                          div({ class: "separator" }),
+                                          ...item.paragraphs.map((par) => {
+                                              return p({}, par);
+                                          }),
+                                          link,
+                                          div({ class: "separator" }));
 
                         d.addEventListener("toggle", () => {
                             link.hidden = !item.link || !d.open;
@@ -276,20 +299,85 @@ const pageProjects = () => {
                     })))));
 };
 
-const pageWIP = () => {
-    return page(h1({}, "Page is not ready yet. Come back later!"));
+const pageAbout = () => {
+    const abouts = [
+        {
+            name: "General",
+            paragraphs: [
+                "My name is Alexander Liannoi. I am 23 years old. I came from Ukraine where I lived almost whole my life. Most of my time I am programming and learning programming, but also I do like physical activites and I go to the gym and play Volleyball in a local team.",
+            ],
+        },
+        {
+            name: "First Steps in Programming",
+            paragraphs: [
+                "I found out about programming not long before finishing high school and immediately loved it. I remember when I studied first several months in university without own laptop or PC as I moved to another city. So I installed C/C++ compiler on my phone and was writing some code on it, what a time ha.",
+                "Then I got a very old DELL laptop from my father. It was so slow that I had to wait several minutes just to open Visual Studio. But eventually, after savings from scholarship and huge crucial financial help from my parents, for what I am very glad and thankful, I got myself a brand new gaming laptop. After that the real gaming era began, but that's a different story.",
+            ],
+        },
+        {
+            name: "IT Cluster Era",
+            paragraphs: [
+                "On the 2nd year my university made an actually cool event with IT school, so all students of my Software Engineering department went to the so called IT Cluster where we spent almost whole year. The best and the most impactful part in terms of good programming mindset, as I see it now, were first several months of C, but I would say that this whole period was the best time in university.",
+                "Despite I did not like them that much (as all of other students), I learned quite a lot in terms of low-level programming and most importantly used this new knowledge on practice. We had to implement our own simple cstdlib, which we had to use for further projects like Team 4-Day Game Jam, Pathfinding and Mini Terminal. It was very hard, especially the last months, but I had a lot of fun. The Oracle bot that was reviewing our submits had no mercy ha.",
+                "After C, we went to webdev. HTML, CSS, JS, TS, PHP, React, Laravel and so on and so forth. It was not that bad, the tasks and projects were fun actually. I remember I liked to design a lot of stuff and implement frontend, backend was kinda boring for me. Among projects I remember were Card Game and Open Group Chat.",
+                "The final team project, as I recall, was to implement a messenger application. So, it was a final exam to test what we have learned during the time. We successfuly passed it, but I cannot forget that we did not have enough time to implement some extra frontend features like showing funny cat gif in case of lost internet connection."
+            ],
+        },
+        {
+            name: "First Commercial Experience",
+            paragraphs: [
+                "After IT Cluster I took summer internship by NIX Solutions. I learnt about .NET and C#, more about React and TS and web applications in general, of what they consist of, they structure and architecture. On internship completion I got an offer to work full time which I accepted.",
+                "During this period I had a more insights about .NET, general web applications architecture based on it, C#, JQuery and Angular. I implemented domain model for Ship Game and custom Object-Relational-Mapping model similar to .NET Entity Framework, worked with JQuery and Angular, nothing really special here, just frontend things.",
+                "At the same time, me with my friends were looking for a startup opportunity and had some discussions with possible customers. So, after around half a year I left the company to start working on a new project with my friends. But at that time, Russia began a war and invaded Ukraine, thus destroying all the plans and current state of the startup."
+            ],
+        },
+        {
+            name: "Gamedev",
+            paragraphs: [
+                "I always wanted to work in gamedev and decided that this is an opportunity to actually start a deep dive into it. After quite some time of learning Unreal Engine and several interviews, I landed a job in Pushka Studios.",
+                "I was very excited and motivated, but it lasted for several months, after which my day work mostly became a routine. I learnt less and less new stuff every day, week, month, though it was cool to have a couple of projects every year, refreshing. I did graphics and engine programming stuff in parallel, but without huge deep dive.",
+                "Then, after around one-and-a-half years I decided to leave Ukraine and find myself in a new place."
+            ],
+        },
+        {
+            name: "New Old Mindset",
+            paragraphs: [
+                "I always liked low-level programming where you need to actually understand your problem on a deep level. That is why I liked gamedev eventually, because it combines the two things I like - hard technical problems to solve and hard design choices to make.",
+                "And at one day I came across a video on YouTube from MollyRocket channel where a man in glasses drew some stuff on a glass board and talked about why Object Oriented Programming is bad. This video resonated with me so hard. I recalled my feelings about OOP and modern way of programming, that deep in my mind I deny them and do not like and feel that it is the right way to do things, it is like a gut feeling. Therefore, I started absorbing other videos from Casey Muratori (that man in glasses yelling at modern programming culture, with whom I actually agree) and other similar ones with same ideas like a sponge and eventually came across a video-cut of stream moments of some random grumpy man.",
+                "This man turned out to be Jonathan Blow. And he immediately earned my sympathy for his thoughts and ideas. I really like the fact that he is both programmer and designer, he is like an actual embodiment of what I like in programming - technicity and creativity."
+            ],
+        },
+        {
+            name: "Programming Philosophy",
+            paragraphs: [
+                "For me, programming is a great combination of both technical and creative skills you need to have to be productive. It forces you to use both halves of your brain respectively. Most of the time you solve direct local problems with technical skills (creativeness is required here as well, but has less impact) and for the more global and general issues you use your creativity to correctly setup all of the parts of the puzzle you are trying to solve. It is like The Yin Yang symbol with creativity for white and technicity for black or vice versa.",
+                "I am really thankful to Casey Muratori, Jonathan Blow, Sean Barret, Shawn McGrath, Ryan Fleury, Yan Chernikov and many many more other people I probably forgot, for showing me the right programming mindset. For correlating a direction of my programming compass and demonstrating that you can build really high quality stuff without all this modern and trendy things that go in and out every several months."
+            ],
+        },
+    ];
+    
+    return page(div({ class: "content-about" },
+                    section({}, ul({}, ...abouts.map((item) => {
+                        const d = details({}, summary({}, item.name),
+                                          div({ class: "separator" }),
+                                          ...item.paragraphs.map((par) => {
+                                              return p({}, par);
+                                          }),
+                                          div({ class: "separator" }));
+                        return li({}, d);
+                    })))));
+};
+
+const page404 = () => {
+    return page(h1({}, "Congratulations, your curiosity led you to out of bounds area"));
 };
 
 const r = router({
-    "/": () => page(h1({}, "Work hard to become N+2 programmer")),
-    
-    "/home": () => pageHome(),
-    
-    "/projects": () => pageProjects(),
-    
-    "/about": () => pageWIP(),
-    
-    "/404": () => page(h1({}, "Congratulations, your curiosity led you to out of bounds area")),
+    "/":         () => pageRoot(),
+    "/home":     () => pageHome(),
+    "/projects": () => pageProjects(),    
+    "/about":    () => pageAbout(),    
+    "/404":      () => page404(),
 });
 
 document.body.appendChild(r);

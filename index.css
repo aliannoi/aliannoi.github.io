@@ -1,6 +1,6 @@
 @font-face {
     font-family: "consola";
-    src: url("consola.ttf");
+    src: url("res/consola.ttf");
 }
 
 :root {
@@ -53,6 +53,14 @@ h1 {
     margin: 1rem 0;
 }
 
+p {
+    text-align: justify;
+}
+
+hr {
+    background: var(--color);
+}
+
 section {
     margin: 1rem 0;
 }
@@ -63,15 +71,23 @@ li {
 }
 
 details {
-    margin: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    margin: 0.5rem 0;
 }
 
 details[open] summary:before {
-    content: "[-] "
+    content: "[-]";
+    margin-right: 0.5rem;
 }
 
-details p {
+details * {
     margin: 0.5rem 0;
+}
+
+details .separator {
+    margin: 0.5rem 0;
+    border-top: 1px dashed currentColor;
 }
 
 summary {
@@ -81,7 +97,8 @@ summary {
 }
 
 summary:before {
-    content: "[+] "
+    content: "[+]";
+    margin-right: 0.5rem;
 }
 
 summary:hover {
@@ -134,8 +151,8 @@ footer a {
 
 footer svg {
     color: var(--color);
-    width: 2rem;
-    height: 2rem;
+    width: 1.5rem;
+    height: 1.5rem;
     text-decoration: none;
 }
 
@@ -143,7 +160,11 @@ footer svg:hover {
     color: var(--color-alt);
 }
 
-.content-projects {
+.content-root, .content-home {
+    margin: auto;
+}
+
+.content-projects, .content-about {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
