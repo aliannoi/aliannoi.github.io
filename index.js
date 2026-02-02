@@ -2,7 +2,7 @@
 
 const COMMON_TAGS = [
     "canvas", "h1", "h2", "h3", "h4", "h5", "h6", "p", "a", "hr",
-    "div", "span","select", "img",
+    "div", "span","select", "img", "video", "audio",
     "ul", "li", "section", "article", "details", "summary",
     "header", "main", "footer",
 ];
@@ -20,13 +20,17 @@ for (const tagName of SVG_TAGS) {
 }
 
 const tagImpl = (tag, attribs, ...children) => {
-    for (const child of children) {
-        if (typeof(child) === "string") {
+    const append = (child) => {
+        if (Array.isArray(child)) {
+            child.forEach(append);
+        } else if (typeof child === "string") {
             tag.appendChild(document.createTextNode(child));
-        } else {
+        } else if (child instanceof Node) {
             tag.appendChild(child);
         }
-    }
+    };
+
+    children.forEach(append);
 
     if (attribs && typeof(attribs) === "object" && !("nodeType" in attribs)) {
         for (const [key, value] of Object.entries(attribs)) {
@@ -196,104 +200,124 @@ const pageProjects = () => {
         {
             name: "WIP Game",
             link: "",
-            paragraphs: [
-                "Adventure inspired by Gen-5-6 consoles era.",
-                "The game I am currently working on. It is also a great learn project as I am trying to do everything from scratch to understand how every part of the game/engine works under the hood.",
-            ],                
+            getContents: () => {
+                const header = p({}, "Game Project inspired by Gen-5-6 consoles era.");
+                const description = [
+                    p({}, "The game I am currently working on. It is also a great learn project as I am trying to do everything from scratch to understand how every part of the game/engine works under the hood."),
+                    p({}, "It has its own editor with basic features like console, profiler, asset hot reload, fly camera and entity mouse pick and it's field manipulation, level save and load etc. I'll make some articles about different systems with more in depth overview."),
+                ];
+                
+                return [header, description];
+            },
         },
         {
             name: "Grind Survivors",
             link: "https://www.grindsurvivors.com",
-            paragraphs: [
-                "Fast-Paced Action Roguelike where demon hunters face endless hellspawn.",
-                "I touched the project for a bit of time as I had some free time while waiting for another project to come up after previous one. Main focus was on working with Unreal Engine's ECS version, implementing entity behaviours. Also I have been doing some player related mechanics like dash.",
-            ],                
+            getContents: () => {
+                const header = p({}, "Fast-Paced Action Roguelike where demon hunters face endless hellspawn.");
+                const description = p({}, "I touched the project for a bit of time as I had some free time while waiting for another project to come up after previous one. Main focus was on working with Unreal Engine's ECS version, implementing entity behaviours. Also I have been doing some player related mechanics like dash.");
+                
+                return [header, description];
+            },
         },
         {
             name: "Unknown 9: Awakening",
             link: "https://en.bandainamcoent.eu/unknown-9/unknown-9-awakening",
-            paragraphs: [
-                "Action-Adventure with fantasy elements.",
-                "The first project I worked with and it was quite huge. I was mainly doing different runtime and memory optimizations on both game and engine level, doing UI and fixing bugs.",
-                "I also implemented initial benchmark system that launched game in special mode, loaded predefined level and flew camera through the level, collecting runtime and memory data. At the end, it displayed statistics in a nice window. I remember it was painful to collect current VRAM usage as Unreal Engine did not provide such functionality, so I had to deep dive into render backend for engine editor and game build to provide such API.",
-                "At some moment, I had to fix some key binding bug which led me to a journey on fixing almost whole key binding system and it's related UI.",
-            ],                
+            getContents: () => {
+                const header = p({}, "Action-Adventure with fantasy elements.");
+                const description = [
+                    p({}, "The first project I worked with and it was quite huge. I was mainly doing different runtime and memory optimizations on both game and engine level, doing UI and fixing bugs."),
+                    p({}, "I also implemented initial benchmark system that launched game in special mode, loaded predefined level and flew camera through the level, collecting runtime and memory data. At the end, it displayed statistics in a nice window. I remember it was painful to collect current VRAM usage as Unreal Engine did not provide such functionality, so I had to deep dive into render backend for engine editor and game build to provide such API."),
+                    p({}, "At some moment, I had to fix some key binding bug which led me to a journey on fixing almost whole key binding system and it's related UI."),
+                ];
+
+                return [header, description];
+            },
         },
         {
             name: "Cartel: Tycoon",
             link: "https://www.carteltycoon.com",
-            paragraphs: [
-                "Survival business sim inspired by the '80s and '90s narco trade.",
-                "As it is a tycoon, it had a tone of UI, so most of the tasks were connected with it. I was fixing and optimizing UI and the game had a lot of such issues both gameplay related UI bugs and runtime performance spikes due to naive UI logic. In addition, I worked with console input to implement gamepad specific input for virtual keyboard.",
-            ],                
+            getContents: () => {
+                const header = p({}, "Survival business sim inspired by the '80s and '90s narco trade.");
+                const description = "As it is a tycoon, it had a tone of UI, so most of the tasks were connected with it. I was fixing and optimizing UI and the game had a lot of such issues both gameplay related UI bugs and runtime performance spikes due to naive UI logic. In addition, I worked with console input to implement gamepad specific input for virtual keyboard.";
+
+                return [header, description];
+            },
         },
         {
             name: "Postal 4: No Regerts",
             link: "https://runningwithscissors.com/games/postal4",
-            paragraphs: [
-                "Satirical and outrageous comedic open world first person shooter.",
-                "My main task was to optimize level load times. The game world was divided into level chunks that took quite some time on Gen-8 consoles. It was a great experience as eventually I came up with a solution that much simpler and had almost no abstractions in contrary to what was before. It did not take much time though, most of the time was spent on testing. Final load times were almost halfed on Gen-8 consoles and got 5-20% boost on Gen-9 consoles and PC.",
-            ],                
+            getContents: () => {
+                const header = p({}, "Satirical and outrageous comedic open world first person shooter.");
+                const description = p({}, "My main task was to optimize level load times. The game world was divided into level chunks that took quite some time on Gen-8 consoles. It was a great experience as eventually I came up with a solution that much simpler and had almost no abstractions in contrary to what was before. It did not take much time though, most of the time was spent on testing. Final load times were almost halfed on Gen-8 consoles and got 5-20% boost on Gen-9 consoles and PC.");
+
+                return [header, description];
+            },
         },
         {
             name: "Deadside",
             link: "https://www.deadsidegame.com",
-            paragraphs: [
-                "Open World Survival Shooter blending hardcore PVP and PVE action.",
-                "Codebase was qutie controversial at the moment I saw it, but recalling it now it had actually good key points such as it's simplicity and openness. Initial task was to setup networking on Gen-9 consoles. After that I have implemented initial core UI components to be built upon and used on console branch of the game.",
-            ],
+            getContents: () => {
+                const header = p({}, "Open World Survival Shooter blending hardcore PVP and PVE action.");
+                const description = p({}, "Codebase was qutie controversial at the moment I saw it, but recalling it now it had actually good key points such as it's simplicity and openness. Initial task was to setup networking on Gen-9 consoles. After that I have implemented initial core UI components to be built upon and used on console branch of the game.");
+
+                return [header, description];
+            },
         },
         {
             name: "Ted",
             link: "https://github.com/aliannoi/ted",
-            paragraphs: [
-                "Text Editor",
-                "Simple hardware accelerated text editor based on gap buffer data structure.",
-            ],
+            getContents: () => {
+                const header = p({}, "Text Editor");
+                const description = p({}, "Simple hardware accelerated text editor based on gap buffer data structure.");
+
+                return [header, description];
+            },
         },
         {
             name: "Fifteen",
             link: "https://github.com/aliannoi/FifteenPuzzleGame",
-            paragraphs: [
-                "Classic 15 Puzzle Game.",
-                "This was one of my first projects in Unreal Engine, I was mainly focused on working with UI here.",
-            ],
+            getContents: () => {
+                const header = p({}, "Classic 15 Puzzle Game.");
+                const description = p({}, "This was one of my first projects in Unreal Engine, I was mainly focused on working with UI here.");
+
+                return [header, description];
+            },
         },
         {
             name: "Snake",
             link: "https://github.com/aliannoi/ConsoleSnake",
-            paragraphs: [
-                "Classic Snake Game in console.",
-                "I put quite some effort to implement the Snake Game as I saw this project as a compilation of all my knowledge at that time.",
-            ],
+            getContents: () => {
+                const header = p({}, "Classic Snake Game in console.");
+                const description = p({}, "I put quite some effort to implement the Snake Game as I saw this project as a compilation of all my knowledge at that time.");
+
+                return [header, description];
+            },
         },
         {
             name: "Shooter",
             link: "https://github.com/aliannoi/BasicShooter",
-            paragraphs: [
-                "Basic Shooter Game.",
-                "The basic shooter game I have implemented while completing Unreal Engine study course. It covered almost all the main parts of the engine that gameplay programmers work with - editor, profiling, actor system, sound classes, blueprints, levels, animation graphs etc.",
-            ],
+            getContents: () => {
+                const header = p({}, "Basic Shooter Game.");
+                const description = p({}, "The basic shooter game I have implemented while completing Unreal Engine study course. It covered almost all the main parts of the engine that gameplay programmers work with - editor, profiling, actor system, sound classes, blueprints, levels, animation graphs etc.");
+
+                return [header, description];
+            },
         },
     ];
     
     return page(div({ class: "content-projects" },
-                    section({}, ul({}, ...projects.map((item) => {
-                        const link = externLink({ href: item.link }, "Link");
-                        link.hidden = true;
-
-                        const image = img({ src: "res/favicon.ico" });
-                        const d = details({}, summary({}, item.name),
+                    section({}, ul({}, ...projects.map((item) => {                        
+                        const sm = summary({}, span({}, item.name));
+                        if (item.link) {
+                            const link = externLink({ href: item.link }, "Link");
+                            sm.appendChild(link);
+                        }
+                        
+                        const d = details({}, sm,
                                           div({ class: "separator" }),
-                                          ...item.paragraphs.map((par) => {
-                                              return p({}, par);
-                                          }),
-                                          link,
+                                          item.getContents(),
                                           div({ class: "separator" }));
-
-                        d.addEventListener("toggle", () => {
-                            link.hidden = !item.link || !d.open;
-                        });
                         
                         return li({}, d);
                     })))));
@@ -358,7 +382,7 @@ const pageAbout = () => {
     
     return page(div({ class: "content-about" },
                     section({}, ul({}, ...abouts.map((item) => {
-                        const d = details({}, summary({}, item.name),
+                        const d = details({}, summary({}, span({}, item.name)),
                                           div({ class: "separator" }),
                                           ...item.paragraphs.map((par) => {
                                               return p({}, par);
