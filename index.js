@@ -64,22 +64,19 @@ const router = (routes) => {
     const result = div({ class: "router" });
 
     const refresh = () => {
-        let path = location.pathname;
-        if (!path) path = "/";
-        
+        let path = document.location.hash.split("#")[1] || "/";        
         if (!(path in routes)) {
             path = "/404";
-            history.replaceState({}, "", "/404");
+            location.hash = path;
         }
         
         result.replaceChildren(routes[path]());
     };
 
-    window.addEventListener("popstate", refresh);
+    window.addEventListener("hashchange", refresh);
     refresh();
 
-    result.navigate = (path) => {
-        history.pushState({}, "", path);
+    result.refresh = (path) => {
         refresh();
     };
 
@@ -87,15 +84,13 @@ const router = (routes) => {
 };
 
 const setTheme = (themeName) => {
-    localStorage.setItem("theme", themeName)
-    document.documentElement.className = themeName
+    localStorage.setItem("theme", themeName);
+    document.documentElement.className = themeName;
 };
 
 // Layout
 
-setTheme("theme-default");
-
-const rootLink     = "/";
+const rootLink     = "#/";
 const githubLink   = "https://github.com/aliannoi";
 const linkedinLink = "https://linkedin.com/in/oleksandr-liannoi-a3410820a";
 const gmailLink    = "mailto:lyannoy.alexander@gmail.com";
@@ -131,23 +126,14 @@ const externLink = (attribs, ...children) => {
 
 const routerLink = (attribs, ...children) => {
     attribs = { href: path, rel: "noopener noreferrer", ...attribs };
-    return a(attribs, ...children).click((e) => {
-        e.preventDefault();
-
-        const path = e.currentTarget.getAttribute("href");
-        const router = getRouter();
-        
-        if (router) {
-            router.navigate(path);
-        }
-    });
+    return a(attribs, ...children);
 };
 
 const pageHeader = () => {
     const headerLinks = [
-        { link: "/home",     text: "Home" },
-        { link: "/projects", text: "Projects" },
-        { link: "/about",    text: "About" },
+        { link: "#/home",     text: "Home" },
+        { link: "#/projects", text: "Projects" },
+        { link: "#/about",    text: "About" },
     ];
 
     return header({}, ...headerLinks.map((item) => {
@@ -404,4 +390,5 @@ const r = router({
     "/404":      () => page404(),
 });
 
+setTheme("theme-default");
 document.body.appendChild(r);
