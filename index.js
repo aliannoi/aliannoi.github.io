@@ -282,11 +282,21 @@ const pageProjects = () => {
             },
         },
         {
+            name: "Convoy Simulation",
+            link: "https://github.com/aliannoi/MilitarySimulation",
+            getContents: () => {
+                const header = p({}, "Military Convoy Simulation.");
+                const description = p({}, "Simple simulation of a military convoy. Vehicles are going by specified spline path, can overtake obstacles in front of them if any and try to preserve convoy formation by decreasing or increasing speed based on distance from each other.");
+
+                return [header, description];
+            },
+        },
+        {
             name: "Ted",
             link: "https://github.com/aliannoi/ted",
             getContents: () => {
                 const header = p({}, "Text Editor");
-                const description = p({}, "Simple hardware accelerated text editor based on gap buffer data structure.");
+                const description = p({}, "Simple hardware accelerated text editor based on gap buffer data structure. Basic cursor controls - next/prev char/line, goto start/end of line/file. Drag'n'drop file in window to open it.");
 
                 return [header, description];
             },
