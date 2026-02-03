@@ -72,7 +72,6 @@ li {
 details {
     display: flex;
     flex-direction: column;
-    margin: 0.5rem 0;
 }
 
 details[open] summary span:before {
@@ -187,6 +186,10 @@ footer svg:hover {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+}
+
+.content-projects video {
+    width: 100%;
 }
 
 .dynamic-text-type:after {

@@ -8,7 +8,7 @@ export const domx = {}; // namespace
 
 const COMMON_TAGS = [
     "canvas", "h1", "h2", "h3", "h4", "h5", "h6", "p", "a", "hr",
-    "div", "span","select", "img", "video", "audio",
+    "div", "span","select", "img", "video", "source", "audio",
     "ul", "li", "section", "article", "details", "summary",
     "header", "main", "footer",
 ];

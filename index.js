@@ -108,7 +108,7 @@ const pageRoot = () => {
     };
     
     const contents = [
-        dynamicTextType(domx.h1({}), "Work hard to become N+2 programmer.", 64, showGoto),
+        dynamicTextType(domx.h1({}), "Work hard to become N+2 programmer.", 48, showGoto),
         goto,
     ];
     
@@ -138,8 +138,18 @@ const pageProjects = () => {
                     domx.p({}, "The game I am currently working on. It is also a great learn project as I am trying to do everything from scratch to understand how every part of the game/engine works under the hood."),
                     domx.p({}, "It has its own editor with basic features like console, profiler, asset hot reload, fly camera and entity mouse pick and it's field manipulation, level save and load etc. I'll make some articles about different systems with more in depth overview."),
                 ];
+                const vid = domx.video(
+                    { preload: "metadata", controls: "", autoplay: "", muted: "", loop: "", playsinline: "" },
+                    domx.source({ src: "res/wip_game_overview.webm", type: "video/webm" }),
+                    domx.source({ src: "res/wip_game_overview.mp4",  type: "video/mp4" }),
+                    domx.span({}, "Your browser does not support HTML videos. You can download the video showcasing the game editor in a preferred format: "),
+                    domx.a({ href: "res/wip_game_overview.webm" }, "webm"),
+                    domx.span({}, ", "),
+                    domx.a({ href: "res/wip_game_overview.mp4" }, "mp4"),
+                );
+                vid.muted = true; // muted attribute does not work if video was added dynamically...
                 
-                return [header, description];
+                return [header, description, vid];
             },
         },
         {
