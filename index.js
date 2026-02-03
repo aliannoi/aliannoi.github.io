@@ -125,7 +125,7 @@ const externLink = (attribs, ...children) => {
 };
 
 const routerLink = (attribs, ...children) => {
-    attribs = { href: path, rel: "noopener noreferrer", ...attribs };
+    attribs = { rel: "noopener noreferrer", ...attribs };
     return a(attribs, ...children);
 };
 
@@ -137,7 +137,7 @@ const pageHeader = () => {
     ];
 
     return header({}, ...headerLinks.map((item) => {
-        const isActive = location.pathname === item.link;
+        const isActive = location.hash === item.link;
         const className = (isActive ? "selected" : "");
         return routerLink({ class: className, href: item.link }, item.text);
     }));
@@ -165,18 +165,49 @@ const page = (...children) => {
                pageFooter());
 };
 
+const dynamicTextType = (tag, text, msPerChar, onFinish = () => {}) => {
+    tag.classList.add("dynamic-text-type");
+
+    tag.textContent = "";
+    
+    let i = 0;
+    const t = setInterval(() => {
+        tag.textContent += text[i++];
+        if (i === text.length) {
+            clearInterval(t);
+            onFinish();
+        }
+    }, msPerChar);
+
+    return tag;
+};
+
 const pageRoot = () => {
-    return page(div({ class: "content-root" }, h1({}, "Work hard to become N+2 programmer")));
+    const goto = p({}, "Go to ", routerLink({ href: "#/home" }, "Home"), " page.");
+    goto.hidden = true;
+    
+    const showGoto = () => {
+        setTimeout(() => {
+            goto.hidden = false;
+        }, 1000);
+    };
+    
+    const contents = [
+        dynamicTextType(h1({}), "Work hard to become N+2 programmer.", 64, showGoto),
+        goto,
+    ];
+    
+    return div({ class: "page" }, pageMain(div({ class: "content-root" }, ...contents)));
 };
 
 const pageHome = () => {
     return page(div({ class: "content-home" },
                     h1({}, "Hello world. My name is Alex."),
                     section({},
-                            p({}, "I am programmer with focus on actually good software development."),
-                            p({}, "By that I mean fast and reliable product that solves your problems.")),
+                            p({}, "I am programmer with focus on producing an actually good software."),
+                            p({}, "By that I mean fast and reliable product that solves specific problems.")),
                     section({},
-                            p({}, "You can learn more about me on ", routerLink({ href: "#/about" }, "About"), " page."),
+                            p({}, "You can learn more about me and discover my programming journey on ", routerLink({ href: "#/about" }, "About"), " page."),
                             p({}, "Stuff I have worked on can be observed on  ", routerLink({ href: "#/projects" }, "Projects"), " page.")),
                    ));
 };
@@ -354,7 +385,7 @@ const pageAbout = () => {
             paragraphs: [
                 "I always liked low-level programming where you need to actually understand your problem on a deep level. That is why I liked gamedev eventually, because it combines the two things I like - hard technical problems to solve and hard design choices to make.",
                 "And at one day I came across a video on YouTube from MollyRocket channel where a man in glasses drew some stuff on a glass board and talked about why Object Oriented Programming is bad. This video resonated with me so hard. I recalled my feelings about OOP and modern way of programming, that deep in my mind I deny them and do not like and feel that it is the right way to do things, it is like a gut feeling. Therefore, I started absorbing other videos from Casey Muratori (that man in glasses yelling at modern programming culture, with whom I actually agree) and other similar ones with same ideas like a sponge and eventually came across a video-cut of stream moments of some random grumpy man.",
-                "This man turned out to be Jonathan Blow. And he immediately earned my sympathy for his thoughts and ideas. I really like the fact that he is both programmer and designer, he is like an actual embodiment of what I like in programming - technicity and creativity."
+                "This man turned out to be Jonathan Blow. And he immediately earned my sympathy for his thoughts and ideas. I really like the fact that he is both programmer and designer, he is like an actual embodiment of what I enjoy in programming - technicity and creativity."
             ],
         },
         {

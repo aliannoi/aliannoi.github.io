@@ -173,7 +173,13 @@ footer svg:hover {
     color: var(--color-alt);
 }
 
-.content-root, .content-home, .content-404 {
+.content-home, .content-404 {
+    margin: auto;
+}
+
+.content-root {
+    display: flex;
+    flex-direction: column;
     margin: auto;
 }
 
@@ -181,4 +187,8 @@ footer svg:hover {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+}
+
+.dynamic-text-type:after {
+    content: "|";
 }
