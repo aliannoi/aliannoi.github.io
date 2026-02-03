@@ -67,7 +67,7 @@ const router = (routes) => {
         let path = document.location.hash.split("#")[1] || "/";        
         if (!(path in routes)) {
             path = "/404";
-            location.hash = path;
+            history.replaceState(null, "", "#/404");
         }
         
         result.replaceChildren(routes[path]());
@@ -176,8 +176,8 @@ const pageHome = () => {
                             p({}, "I am programmer with focus on actually good software development."),
                             p({}, "By that I mean fast and reliable product that solves your problems.")),
                     section({},
-                            p({}, "You can learn more about me on ", routerLink({ href: "/about" }, "About"), " page."),
-                            p({}, "Stuff I have worked on can be observed on  ", routerLink({ href: "/projects" }, "Projects"), " page.")),
+                            p({}, "You can learn more about me on ", routerLink({ href: "#/about" }, "About"), " page."),
+                            p({}, "Stuff I have worked on can be observed on  ", routerLink({ href: "#/projects" }, "Projects"), " page.")),
                    ));
 };
 
@@ -379,7 +379,12 @@ const pageAbout = () => {
 };
 
 const page404 = () => {
-    return page(h1({}, "Congratulations, your curiosity led you to out of bounds area"));
+    const contents = [
+        h1({}, "Out of bounds area, please come back."),
+        p({}, "Go back to ", routerLink({ href: "#/home" }, "Home"), " page."),
+    ];
+    
+    return div({ class: "page" }, pageMain(div({ class: "content-404" }, ...contents)));
 };
 
 const r = router({

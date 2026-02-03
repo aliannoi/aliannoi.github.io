@@ -110,6 +110,8 @@ details summary:hover:not(:has(a:hover)) {
 details summary a {
     display: none;
     pointer-events: auto;
+    margin: 0;
+    padding: 0.5rem 0;
 }
 
 details[open] summary a {
@@ -171,7 +173,7 @@ footer svg:hover {
     color: var(--color-alt);
 }
 
-.content-root, .content-home {
+.content-root, .content-home, .content-404 {
     margin: auto;
 }
 
