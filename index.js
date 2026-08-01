@@ -7,7 +7,7 @@ const setTheme = (themeName) => {
 
 const rootLink     = "#/";
 const githubLink   = "https://github.com/aliannoi";
-const linkedinLink = "https://linkedin.com/in/oleksandr-liannoi-a3410820a";
+const linkedinLink = "https://www.linkedin.com/in/alex-liannoi-a3410820a";
 const gmailLink    = "mailto:lyannoy.alexander@gmail.com";
 const cvLink       = "https://docs.google.com/document/d/1ls1dzDjHjdCEG5Qj-uDLoHNn6BDknf1W26QWnPJjM1U/export?format=pdf";
 
